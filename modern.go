@@ -14,11 +14,11 @@ func init() {
 	}
 	for _, kv := range info.Settings {
 		switch kv.Key {
-		case "gitrevision":
+		case "vcs.revision":
 			Revision = kv.Value
-		case "gitcommittime":
+		case "vcs.time":
 			LastCommit, _ = time.Parse(time.RFC3339, kv.Value)
-		case "gituncommitted":
+		case "vcs.modified":
 			DirtyBuild = kv.Value == "true"
 		}
 	}
