@@ -1,0 +1,53 @@
+cd main
+
+# Commit current env
+env GIT_COMMITTER_NAME="Test"
+env GIT_COMMITTER_EMAIL="test@example.com"
+env GIT_AUTHOR_NAME=$GIT_COMMITTER_NAME
+env GIT_AUTHOR_EMAIL=$GIT_COMMITTER_EMAIL
+
+exec git init --initial-branch=m
+exec git add .
+exec git commit -m 'init'
+
+# Setup Go and compile
+env GOPATH=$WORK/go
+env GOCACHE=$WORK/gocache
+exec go install -buildvcs=true .
+
+# Test output
+exec $WORK/go/bin/main -v
+! stdout unknown
+stdout 'Version: \(devel\)'
+stdout Revision:
+stdout Committed:
+! stderr .
+
+exec $WORK/go/bin/main -version
+! stdout unknown
+! stdout done
+stdout 'Version: \(devel\)'
+stdout Revision:
+stdout Committed:
+! stderr .
+
+exec $WORK/go/bin/main
+stdout ^done$
+! stderr .
+
+
+-- main/main.go --
+package main
+
+import (
+    "flag"
+    "fmt"
+
+    "github.com/carlmjohnson/versioninfo"
+)
+
+func main() {
+    versioninfo.AddFlag(nil)
+    flag.Parse()
+    fmt.Println("done")
+}
