@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -14,31 +15,40 @@ func AddFlag(f *flag.FlagSet) {
 	if f == nil {
 		f = flag.CommandLine
 	}
-	f.Var(flagVersion{}, "v", "short alias for -version")
-	f.Var(flagVersion{}, "version", "print version information and exit")
+	f.Var(boolFunc(printVersion), "v", "short alias for -version")
+	f.Var(boolFunc(printVersion), "version", "print version information and exit")
 }
 
-type flagVersion struct{}
+func printVersion(b bool) error {
+	if !b {
+		return nil
+	}
+	fmt.Println("Version:", Version)
+	fmt.Println("Revision:", Revision)
+	if Revision != "unknown" {
+		fmt.Println("Committed:", LastCommit.Format(time.RFC1123))
+		if DirtyBuild {
+			fmt.Println("Dirty Build")
+		}
+	}
+	os.Exit(0)
+	panic("unreachable")
+}
 
-func (v flagVersion) IsBoolFlag() bool {
+type boolFunc func(bool) error
+
+func (f boolFunc) IsBoolFlag() bool {
 	return true
 }
 
-func (v flagVersion) String() string {
+func (f boolFunc) String() string {
 	return ""
 }
 
-func (v flagVersion) Set(s string) error {
-	if s == "true" {
-		fmt.Println("Version:", Version)
-		fmt.Println("Revision:", Revision)
-		if Revision != "unknown" {
-			fmt.Println("Committed:", LastCommit.Format(time.RFC1123))
-			if DirtyBuild {
-				fmt.Println("Dirty Build")
-			}
-		}
-		os.Exit(0)
+func (f boolFunc) Set(s string) error {
+	b, err := strconv.ParseBool(s)
+	if err != nil {
+		return err
 	}
-	return nil
+	return f(b)
 }
