@@ -85,3 +85,31 @@ func myPrint(b bool) error {
     return nil
 }
 ```
+
+Customize your flags, for example to set `-version` only:
+
+```go
+package main
+
+import (
+    "flag"
+    "fmt"
+    "os"
+
+    "github.com/carlmjohnson/versioninfo"
+)
+
+func main() {
+    f.Var(versioninfo.BoolFunc(myPrint), "version", "Print version and exit")
+    flag.Parse()
+    fmt.Println("done")
+}
+
+func myPrint(b bool) error {
+    if b {
+        fmt.Println(versioninfo.Short())
+        os.Exit(0)
+    }
+    return nil
+}
+```

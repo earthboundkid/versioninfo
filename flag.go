@@ -20,8 +20,8 @@ func AddFlagWithFunc(f *flag.FlagSet, do func(b bool) error) {
 	if f == nil {
 		f = flag.CommandLine
 	}
-	f.Var(boolFunc(do), "v", "short alias for -version")
-	f.Var(boolFunc(do), "version", "print version information and exit")
+	f.Var(BoolFunc(do), "v", "short alias for -version")
+	f.Var(BoolFunc(do), "version", "print version information and exit")
 }
 
 // printVersion is the default version print.
@@ -41,17 +41,18 @@ func printVersion(b bool) error {
 	panic("unreachable")
 }
 
-type boolFunc func(bool) error
+// BoolFunc allows to customize the command line flags.
+type BoolFunc func(bool) error
 
-func (f boolFunc) IsBoolFlag() bool {
+func (f BoolFunc) IsBoolFlag() bool {
 	return true
 }
 
-func (f boolFunc) String() string {
+func (f BoolFunc) String() string {
 	return ""
 }
 
-func (f boolFunc) Set(s string) error {
+func (f BoolFunc) Set(s string) error {
 	b, err := strconv.ParseBool(s)
 	if err != nil {
 		return err
