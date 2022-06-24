@@ -12,13 +12,19 @@ import (
 // If triggered, the flags print version information and call os.Exit(0).
 // If FlagSet is nil, it adds the flags to flag.CommandLine.
 func AddFlag(f *flag.FlagSet) {
+	AddFlagWithFunc(f, printVersion)
+}
+
+// AddFlagWithFunc is like AddFlag but with a custom version-print function.
+func AddFlagWithFunc(f *flag.FlagSet, do func(b bool) error) {
 	if f == nil {
 		f = flag.CommandLine
 	}
-	f.Var(boolFunc(printVersion), "v", "short alias for -version")
-	f.Var(boolFunc(printVersion), "version", "print version information and exit")
+	f.Var(boolFunc(do), "v", "short alias for -version")
+	f.Var(boolFunc(do), "version", "print version information and exit")
 }
 
+// printVersion is the default version print.
 func printVersion(b bool) error {
 	if !b {
 		return nil
