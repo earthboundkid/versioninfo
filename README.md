@@ -2,4 +2,6 @@
 
 Importable package that parses `debug.ReadBuildInfo()` for inclusion in your Go application.
 
+Requires Go 1.12+ to retrieve [`BuildInfo.Main.Version`](https://pkg.go.dev/runtime/debug#BuildInfo).
+
 Requires Go 1.18+ for Git revision information, but compatible with prior versions of Go.
