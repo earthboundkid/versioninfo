@@ -57,31 +57,3 @@ func main() {
     fmt.Println("done")
 }
 ```
-
-To customize your `-version` print:
-
-```go
-package main
-
-import (
-    "flag"
-    "fmt"
-    "os"
-
-    "github.com/carlmjohnson/versioninfo"
-)
-
-func main() {
-    versioninfo.AddFlagWithFunc(nil, myPrint)
-    flag.Parse()
-    fmt.Println("done")
-}
-
-func myPrint(b bool) error {
-    if b {
-        fmt.Println(versioninfo.Short())
-        os.Exit(0)
-    }
-    return nil
-}
-```
