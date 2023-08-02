@@ -13,6 +13,9 @@ func init() {
 		return
 	}
 	for _, kv := range info.Settings {
+		if kv.Value == "" {
+			continue
+		}
 		switch kv.Key {
 		case "vcs.revision":
 			Revision = kv.Value
