@@ -9,5 +9,7 @@ func init() {
 	if !ok {
 		return
 	}
-	Version = info.Main.Version
+	if info.Main.Version != "" {
+		Version = info.Main.Version
+	}
 }
