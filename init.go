@@ -1,5 +1,3 @@
-//go:build go1.18
-
 package versioninfo
 
 import (
@@ -11,6 +9,9 @@ func init() {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		return
+	}
+	if info.Main.Version != "" {
+		Version = info.Main.Version
 	}
 	for _, kv := range info.Settings {
 		if kv.Value == "" {

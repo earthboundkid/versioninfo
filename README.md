@@ -1,4 +1,4 @@
-# versioninfo [![GoDoc](https://godoc.org/github.com/carlmjohnson/versioninfo?status.svg)](https://godoc.org/github.com/carlmjohnson/versioninfo) [![Go Report Card](https://goreportcard.com/badge/github.com/carlmjohnson/versioninfo)](https://goreportcard.com/report/github.com/carlmjohnson/versioninfo)
+# versioninfo [![GoDoc](https://godoc.org/github.com/earthboundkid/versioninfo?status.svg)](https://godoc.org/github.com/earthboundkid/versioninfo) [![Go Report Card](https://goreportcard.com/badge/github.com/earthboundkid/versioninfo)](https://goreportcard.com/report/github.com/earthboundkid/versioninfo)
 
 Importable package that parses `debug.ReadBuildInfo()` for inclusion in your Go application.
 
@@ -12,7 +12,7 @@ package main
 import (
     "fmt"
 
-    "github.com/carlmjohnson/versioninfo"
+    "github.com/earthboundkid/versioninfo/v2"
 )
 
 func main() {
@@ -31,7 +31,7 @@ package main
 import (
     "fmt"
 
-    "github.com/carlmjohnson/versioninfo"
+    "github.com/earthboundkid/versioninfo/v2"
 )
 
 func main() {
@@ -48,7 +48,7 @@ import (
     "flag"
     "fmt"
 
-    "github.com/carlmjohnson/versioninfo"
+    "github.com/earthboundkid/versioninfo/v2"
 )
 
 func main() {
