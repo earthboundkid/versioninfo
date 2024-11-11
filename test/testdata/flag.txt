@@ -43,7 +43,7 @@ import (
     "flag"
     "fmt"
 
-    "github.com/carlmjohnson/versioninfo"
+    "github.com/earthboundkid/versioninfo/v2"
 )
 
 func main() {
